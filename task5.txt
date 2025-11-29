@@ -1,0 +1,31 @@
+# weights là một dictionary {variable_index: weight_value}
+memo = {} # Để lưu kết quả đã tính, tránh tính lại (Dynamic Programming)
+
+def find_max_weight(bdd_node):
+    # 1. Base cases (Điểm dừng)
+    if bdd_node là Zero (False):
+        return -infinity # Đường này không hợp lệ (không phải reachable marking)
+    if bdd_node là One (True):
+        return 0 # Đã đi hết đường, không còn trọng số để cộng
+
+    # 2. Kiểm tra memoization
+    if bdd_node in memo:
+        return memo[bdd_node]
+
+    # 3. Lấy thông tin biến hiện tại (tương ứng với Place nào)
+    var_index = bdd_node.variable_index
+    current_weight = weights.get(var_index, 0)
+
+    # 4. Đệ quy: So sánh chọn 0 (Low) và chọn 1 (High)
+    # Nhánh Low: Place này = 0, không được cộng điểm
+    val_low = find_max_weight(bdd_node.low)
+    
+    # Nhánh High: Place này = 1, được cộng điểm
+    val_high = current_weight + find_max_weight(bdd_node.high)
+
+    # 5. Chọn nhánh tốt nhất
+    best_val = max(val_low, val_high)
+    
+    # Lưu vào memo
+    memo[bdd_node] = best_val
+    return best_val
