@@ -211,7 +211,7 @@ class ExplicitReachabilityAnalyzer:
                     violations.append((marking_tuple, i, tokens))
 
         if violations:
-            print(f"⚠️  WARNING: Found {len(violations)} 1-safe violations!")
+            print(f"  WARNING: Found {len(violations)} 1-safe violations!")
             for marking, place_idx, tokens in violations[:5]:  # Show first 5
                 sorted_places = sorted(self.petri_net.places.keys())
                 place_id = sorted_places[place_idx]
@@ -258,7 +258,7 @@ def compare_bfs_dfs(petri_net: PetriNet):
     if reachable_bfs == reachable_dfs:
         print("\n✓ BFS and DFS found identical reachable sets")
     else:
-        print("\n⚠️  WARNING: BFS and DFS found different reachable sets!")
+        print("\n  WARNING: BFS and DFS found different reachable sets!")
         print(f"  BFS only: {len(reachable_bfs - reachable_dfs)} markings")
         print(f"  DFS only: {len(reachable_dfs - reachable_bfs)} markings")
 
@@ -270,12 +270,9 @@ def main():
     import sys
     import glob
 
-    # Lấy filename từ command line argument
     if len(sys.argv) > 1:
-        # Nếu có argument: python explicit.py exam.pnml
         pnml_files = [sys.argv[1]]
     else:
-        # Nếu không có argument: tìm tất cả file .pnml
         pnml_files = glob.glob("*.pnml")
 
         if not pnml_files:
@@ -324,10 +321,10 @@ def main():
             # compare_bfs_dfs(petri_net)
 
         except FileNotFoundError:
-            print(f"\n❌ Error: File '{filename}' not found!")
+            print(f"\n Error: File '{filename}' not found!")
             print(f"   Please make sure the file exists in the current directory.")
         except Exception as e:
-            print(f"\n❌ Error processing {filename}: {str(e)}")
+            print(f"\n Error processing {filename}: {str(e)}")
             import traceback
             traceback.print_exc()
 
