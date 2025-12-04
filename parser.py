@@ -207,7 +207,7 @@ class PNMLParser:
         # Verify consistency
         errors = petri_net.verify_consistency()
         if errors:
-            print("\n⚠️  Consistency Check Warnings:")
+            print("\n  Consistency Check Warnings:")
             for error in errors:
                 print(f"  - {error}")
             print()
